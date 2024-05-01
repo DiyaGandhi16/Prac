@@ -1,0 +1,78 @@
+import seaborn as sns
+df = sns.load_dataset('titanic')
+
+df
+
+df = df[['survived', 'age', 'fare', 'class', 'sex']]
+
+df
+
+sns.jointplot( x='age', y='fare', data=df)
+sns.jointplot( x='age', y='fare', data=df, hue='survived')
+sns.jointplot( x='age', y='fare', data=df, hue='class')
+
+sns.pairplot(df, hue='sex')
+
+sns.countplot(x=df['sec'])
+sns.countplot(x=df{'class'])
+
+sns.barplot(x='sex', y='survived', data=df)
+sns.barplot(x='sex', y='survived',hue='class', data=df)
+
+sns.histplot(df['fare'])
+sns.kdeplot(df['fare'])
+
+-----------------------------------------------------------------------------------
+
+import pandas as pd
+
+file_path ='c:/Users/DIYA/Desktop/student.csv'
+
+df = pd.read_csv(file_path)
+
+df
+
+numeric_df = df.select_dtype(include = 'number')
+
+numeric_df.mean()
+numeric_df.median()
+numeric_df.std()
+numeric_df.min()
+numeric_df.max()
+
+import numpy as np
+
+np.std(numeric_df['marks'])
+
+gr1 = df.groupby('class')
+te = gr1.get_group('TE')
+
+te.min()
+te.max()
+
+gr2 = df.groupby('age')
+gr2.groups
+
+tw = gr2.get_group(14)
+tw
+
+********
+import seaborn as sns
+df = sns.load_dataset('iris')
+df
+
+df.describe()
+
+gr = df.groupby('species')
+
+se = gr.get_group('setosa')
+ve = gr.get_group('versicolor')
+vi = gr.get_group('virginica')
+
+se.shape
+ve.shape
+vi.shape
+
+se.describe()
+ve.describe()
+vi.describe()
