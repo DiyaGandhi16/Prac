@@ -1,0 +1,76 @@
+def is_safe(board, row, col, n):
+    # Check if there is a queen in the same column
+    for i in range(row):
+        if board[i][col] == 1:
+            return False
+
+    # Check if there is a queen in the left upper diagonal
+    for i in range(row, -1, -1):
+        j = col - (row - i)
+        if j >= 0 and board[i][j] == 1:
+            return False
+
+    # Check if there is a queen in the right upper diagonal
+    for i in range(row, -1, -1):
+        j = col + (row - i)
+        if j < n and board[i][j] == 1:
+            return False
+
+    return True
+
+def solve_n_queens_backtracking(n):
+    board = [[0] * n for _ in range(n)]
+
+    def backtrack(row):
+        if row == n:
+            # All queens are placed successfully
+            return [list(row) for row in board]
+
+        solutions = []
+        for col in range(n):
+            if is_safe(board, row, col, n):
+                board[row][col] = 1
+                solutions += backtrack(row + 1)
+                board[row][col] = 0  # Backtrack
+
+        return solutions
+
+    return backtrack(0)
+
+# Example Usage:
+n_queens_solutions_backtracking = solve_n_queens_backtracking(4)
+print("N-Queens Solutions using Backtracking:")
+for solution in n_queens_solutions_backtracking:
+    print(solution)
+
+def is_safe(board, row, col, n):
+    for i in range(row):
+        if board[i][col] == 1 or \
+           (col - row + i >= 0 and board[i][col - row + i] == 1) or \
+           (col + row - i < n and board[i][col + row - i] == 1):
+            return False
+    return True
+
+def solve_n_queens_branch_and_bound(n):
+    board = [[0] * n for _ in range(n)]
+
+    def backtrack(row):
+        if row == n:
+            return [list(row) for row in board]
+
+        solutions = []
+        for col in range(n):
+            if is_safe(board, row, col, n):
+                board[row][col] = 1
+                solutions += backtrack(row + 1)
+                board[row][col] = 0  # Backtrack
+
+        return solutions
+
+    return backtrack(0)
+
+# Example Usage:
+n_queens_solutions_branch_and_bound = solve_n_queens_branch_and_bound(4)
+print("N-Queens Solutions using Branch and Bound:")
+for solution in n_queens_solutions_branch_and_bound:
+   print(solution)
